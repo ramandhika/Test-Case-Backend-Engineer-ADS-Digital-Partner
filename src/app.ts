@@ -1,11 +1,8 @@
 import express from "express";
-import karyawanRoutes from "./routes/karyawanRoutes";
-import cutiRoutes from "./routes/cutiRoutes";
+import Route from "./routes/Route";
 
 const app = express();
 app.use(express.json());
 
-app.use("/api/karyawan", karyawanRoutes);
-app.use("/api/cuti", cutiRoutes);
-
+app.use("/api", Route);
 export default app;

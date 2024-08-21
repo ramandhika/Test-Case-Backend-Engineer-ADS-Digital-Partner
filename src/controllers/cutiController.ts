@@ -23,32 +23,54 @@ export const createCuti = async (req: Request, res: Response) => {
 };
 
 export const updateCuti = async (req: Request, res: Response) => {
-  const { id } = req.params;
+  const { nomorInduk } = req.params;
   const { tanggalCuti, lamaCuti, keterangan } = req.body;
+
   try {
-    const cutiDiperbarui = await prisma.cuti.update({
-      where: { id: parseInt(id) },
-      data: { tanggalCuti: new Date(tanggalCuti), lamaCuti, keterangan },
+    const cutiDiperbarui = await prisma.cuti.updateMany({
+      where: { nomorInduk },
+      data: {
+        tanggalCuti: new Date(tanggalCuti),
+        lamaCuti,
+        keterangan,
+      },
     });
+
+    if (cutiDiperbarui.count === 0) {
+      return res
+        .status(404)
+        .json({ pesan: "Cuti dengan nomorInduk ini tidak ditemukan" });
+    }
+
     res.json({ pesan: "Cuti berhasil diperbarui", data: cutiDiperbarui });
   } catch (error) {
-    res
-      .status(400)
-      .json({ pesan: "Gagal memperbarui cuti", error: (error as any).message });
+    res.status(400).json({
+      pesan: "Gagal memperbarui cuti",
+      error: (error as any).message,
+    });
   }
 };
 
 export const deleteCuti = async (req: Request, res: Response) => {
-  const { id } = req.params;
+  const { nomorInduk } = req.params;
+
   try {
-    await prisma.cuti.delete({
-      where: { id: parseInt(id) },
+    const cutiDihapus = await prisma.cuti.deleteMany({
+      where: { nomorInduk },
     });
+
+    if (cutiDihapus.count === 0) {
+      return res
+        .status(404)
+        .json({ pesan: "Cuti dengan nomorInduk ini tidak ditemukan" });
+    }
+
     res.json({ pesan: "Cuti berhasil dihapus" });
   } catch (error) {
-    res
-      .status(400)
-      .json({ pesan: "Gagal menghapus cuti", error: (error as any).message });
+    res.status(400).json({
+      pesan: "Gagal menghapus cuti",
+      error: (error as any).message,
+    });
   }
 };
 

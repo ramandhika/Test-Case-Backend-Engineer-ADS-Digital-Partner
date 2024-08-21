@@ -25,11 +25,12 @@ export const createKaryawan = async (req: Request, res: Response) => {
 };
 
 export const updateKaryawan = async (req: Request, res: Response) => {
-  const { id } = req.params;
+  const { nomorInduk } = req.params;
   const { nama, alamat, tanggalLahir, tanggalBergabung } = req.body;
+
   try {
-    const karyawanDiperbarui = await prisma.karyawan.update({
-      where: { id: parseInt(id) },
+    const karyawan = await prisma.karyawan.update({
+      where: { nomorInduk },
       data: {
         nama,
         alamat,
@@ -37,23 +38,21 @@ export const updateKaryawan = async (req: Request, res: Response) => {
         tanggalBergabung: new Date(tanggalBergabung),
       },
     });
-    res.json({
-      pesan: "Karyawan berhasil diperbarui",
-      data: karyawanDiperbarui,
-    });
+    res.json({ pesan: "Karyawan berhasil diupdate", data: karyawan });
   } catch (error) {
     res.status(400).json({
-      pesan: "Gagal memperbarui karyawan",
+      pesan: "Gagal mengupdate karyawan",
       error: (error as any).message,
     });
   }
 };
 
 export const deleteKaryawan = async (req: Request, res: Response) => {
-  const { id } = req.params;
+  const { nomorInduk } = req.params;
+
   try {
     await prisma.karyawan.delete({
-      where: { id: parseInt(id) },
+      where: { nomorInduk },
     });
     res.json({ pesan: "Karyawan berhasil dihapus" });
   } catch (error) {
