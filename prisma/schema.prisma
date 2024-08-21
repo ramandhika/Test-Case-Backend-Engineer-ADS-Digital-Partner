@@ -25,7 +25,7 @@ model Karyawan {
 
 model Cuti {
   id          Int      @id @default(autoincrement())
-  nomorInduk  String  @unique
+  nomorInduk  String
   tanggalCuti DateTime
   lamaCuti    Int
   keterangan  String

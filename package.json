@@ -1,9 +1,11 @@
 {
-  "name": "be-test1",
+  "name": "test-case-backend-engineer-ads-digital-partner",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "dev": "bunx ts-node-dev src/server.ts"
+    "dev": "bunx ts-node-dev src/server.ts",
+    "migrate": "bunx prisma migrate dev",
+    "seed": "bunx ts-node --transpile-only prisma/seed.ts"
   },
   "keywords": [],
   "author": "",
