@@ -14,11 +14,15 @@ export const createCuti = async (req: Request, res: Response) => {
         keterangan,
       },
     });
-    res.json({ pesan: "Cuti berhasil ditambahkan", data: cutiBaru });
+    res.status(201).json({
+      pesan: "Cuti berhasil ditambahkan",
+      data: cutiBaru,
+    });
   } catch (error) {
-    res
-      .status(400)
-      .json({ pesan: "Gagal menambahkan cuti", error: (error as any).message });
+    res.status(400).json({
+      pesan: "Gagal menambahkan cuti",
+      error: (error as any).message,
+    });
   }
 };
 
@@ -37,9 +41,9 @@ export const updateCuti = async (req: Request, res: Response) => {
     });
 
     if (cutiDiperbarui.count === 0) {
-      return res
-        .status(404)
-        .json({ pesan: "Cuti dengan nomorInduk ini tidak ditemukan" });
+      return res.status(404).json({
+        pesan: "Cuti dengan nomorInduk ini tidak ditemukan",
+      });
     }
 
     res.json({ pesan: "Cuti berhasil diperbarui", data: cutiDiperbarui });
@@ -60,12 +64,14 @@ export const deleteCuti = async (req: Request, res: Response) => {
     });
 
     if (cutiDihapus.count === 0) {
-      return res
-        .status(404)
-        .json({ pesan: "Cuti dengan nomorInduk ini tidak ditemukan" });
+      return res.status(404).json({
+        pesan: "Cuti dengan nomorInduk ini tidak ditemukan",
+      });
     }
 
-    res.json({ pesan: "Cuti berhasil dihapus" });
+    res.status(200).json({
+      pesan: "Cuti berhasil dihapus",
+    });
   } catch (error) {
     res.status(400).json({
       pesan: "Gagal menghapus cuti",
@@ -87,10 +93,14 @@ export const getAllCuti = async (req: Request, res: Response) => {
       orderBy: orderBy,
     });
 
-    res.status(200).json({ message: "Data Cuti berhasil diambil", data: cuti });
+    res.status(200).json({
+      message: "Data Cuti berhasil diambil",
+      data: cuti,
+    });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Terjadi kesalahan saat mengambil data Cuti", error });
+    res.status(500).json({
+      message: "Terjadi kesalahan saat mengambil data Cuti",
+      error,
+    });
   }
 };

@@ -15,7 +15,10 @@ export const createKaryawan = async (req: Request, res: Response) => {
         tanggalBergabung: new Date(tanggalBergabung),
       },
     });
-    res.json({ pesan: "Karyawan berhasil ditambahkan", data: karyawanBaru });
+    res.status(201).json({
+      pesan: "Karyawan berhasil ditambahkan",
+      data: karyawanBaru,
+    });
   } catch (error) {
     res.status(400).json({
       pesan: "Gagal menambahkan karyawan",
@@ -38,7 +41,10 @@ export const updateKaryawan = async (req: Request, res: Response) => {
         tanggalBergabung: new Date(tanggalBergabung),
       },
     });
-    res.json({ pesan: "Karyawan berhasil diupdate", data: karyawan });
+    res.status(200).json({
+      pesan: "Karyawan berhasil diupdate",
+      data: karyawan,
+    });
   } catch (error) {
     res.status(400).json({
       pesan: "Gagal mengupdate karyawan",
@@ -54,7 +60,9 @@ export const deleteKaryawan = async (req: Request, res: Response) => {
     await prisma.karyawan.delete({
       where: { nomorInduk },
     });
-    res.json({ pesan: "Karyawan berhasil dihapus" });
+    res.status(200).json({
+      pesan: "Karyawan berhasil dihapus",
+    });
   } catch (error) {
     res.status(400).json({
       pesan: "Gagal menghapus karyawan",
@@ -78,9 +86,10 @@ export const getAllKaryawan = async (req: Request, res: Response) => {
       orderBy: orderBy,
     });
 
-    res
-      .status(200)
-      .json({ message: "Data Karyawan berhasil diambil", data: karyawan });
+    res.status(200).json({
+      message: "Data Karyawan berhasil diambil",
+      data: karyawan,
+    });
   } catch (error) {
     res.status(500).json({
       message: "Terjadi kesalahan saat mengambil data Karyawan",
@@ -97,7 +106,10 @@ export const getKaryawanWithCuti = async (req: Request, res: Response) => {
       include: { cuti: true },
     });
     if (karyawan) {
-      res.json({ pesan: "Data karyawan berhasil diambil", data: karyawan });
+      res.status(200).json({
+        pesan: "Data karyawan berhasil diambil",
+        data: karyawan,
+      });
     } else {
       res.status(404).json({ pesan: "Karyawan tidak ditemukan" });
     }
