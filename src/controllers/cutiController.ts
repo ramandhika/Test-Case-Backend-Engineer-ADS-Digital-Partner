@@ -89,6 +89,7 @@ export const getAllCuti = async (req: Request, res: Response) => {
       orderBy = { tanggalCuti: "asc" };
     }
 
+    // Ambil data cuti jika ada query sortBy
     const cuti = await prisma.cuti.findMany({
       orderBy: orderBy,
     });

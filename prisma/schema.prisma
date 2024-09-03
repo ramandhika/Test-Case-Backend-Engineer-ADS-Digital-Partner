@@ -29,5 +29,5 @@ model Cuti {
   tanggalCuti DateTime
   lamaCuti    Int
   keterangan  String
-  karyawan    Karyawan @relation(fields: [nomorInduk], references: [nomorInduk])
+  karyawan    Karyawan @relation(fields: [nomorInduk], references: [nomorInduk], onDelete: Cascade)
 }
